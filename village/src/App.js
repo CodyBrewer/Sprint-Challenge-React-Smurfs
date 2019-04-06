@@ -3,9 +3,28 @@ import axios from 'axios';
 import './App.css';
 import SmurfForm from './components/SmurfForm';
 import Smurfs from './components/Smurfs';
-import { Route } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
+const NavBar = styled.nav`
+  display: grid;
+  grid-template-columns: 20% 30% 30% 20%;
+  grid-template-rows: 40px;
+
+`
+const MyNavLink = styled(NavLink)`
+  color: #000;
+  text-decoration: none;
+  text-transform: uppercase;
+  }
+`
+const SmurfListLink = styled(MyNavLink)`
+  grid-column-start: 2;
+  
+`
+const SmurfFormLink = styled(MyNavLink)`
+
+`
  class App extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +53,10 @@ import styled from 'styled-components'
   render() {
     return (
       <div className="App">
+      <NavBar>
+        <SmurfListLink to="/">Smurfs List</SmurfListLink>
+        <SmurfFormLink to="/smurf-form">Add Smurf</SmurfFormLink>
+      </NavBar>
         <Route exact path="/"
           render = {props => (
             <Smurfs{...props}
@@ -41,7 +64,10 @@ import styled from 'styled-components'
             />
           )}
         />
-        <Route  path ="/smurf-form" component={SmurfForm} />
+        <Route  
+          path ="/smurf-form" 
+          render={props=> <SmurfForm {...props} addSmurf={this.addSmurf} />}
+        />
       </div>
     );
   }
